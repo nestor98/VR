@@ -4,6 +4,7 @@ Shader "Custom/Disappearing"
   {
     _Color ("Color", Color) = (1,1,1,1)
     _Transparency ("Transparency", Range(0, 1)) = 1
+    _Metallic ("Metallic", Range(0,1)) = 0.5
   }
   SubShader
   {
@@ -16,9 +17,11 @@ Shader "Custom/Disappearing"
     };
     fixed4 _Color;
     fixed _Transparency;
+    half _Metallic;
     void surf (Input IN, inout SurfaceOutputStandard o)
     {
       o.Albedo = _Color.rgb;
+      o.Metallic = _Metallic;
       o.Alpha = _Transparency;
     }
     ENDCG
