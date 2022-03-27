@@ -28,13 +28,10 @@ public class Disappearing : MonoBehaviour
         // You have to select the property name, not the display name
         meshRenderer.material.SetFloat("_Transparency", transparency);
 
+        // Also disable the shadows if it is transparent enough:
         if (transparency < 0.85f)
-        {
             meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        }
         else
-        {
             meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        }
     }
 }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class cameraController : MonoBehaviour
 {
+    // Move in xz with WASD, look around with the mouse.
+    // Press SPACE to show/hide the cursor
+    // Press 1..4 to choose between the four rooms
+
     public float rotSpeed = 20.0f;
     public float moveSpeed = 40.0f;
 
@@ -15,8 +19,7 @@ public class cameraController : MonoBehaviour
     // To restore previously hidden objects:
     private HashSet<GameObject> hiddenObjs = new HashSet<GameObject>();
 
-
-    private int currentRoom = 1;
+    private int currentRoom = 1; // Small optimization (not a good idea to use a lot of pointlights)
 
 
     // Start is called before the first frame update
@@ -31,11 +34,11 @@ public class cameraController : MonoBehaviour
         ApplyInputs();
         if (currentRoom == 1) RayCast(); // for OT-0
 
-        if (Input.GetKeyDown("space")) {
+        if (Input.GetKeyDown("space")) { // Toggle cursor
             Cursor.visible = !Cursor.visible;
         }
 
-        RoomsHack(); // Disable rooms for performance (I just realized pointlights are bad)
+        RoomsInputs(); // Disable rooms for performance (I just realized pointlights are bad)
     }
 
     private void ApplyInputs()
@@ -92,7 +95,7 @@ public class cameraController : MonoBehaviour
 
     // Checks if a number from 1 to 4 has been pressed, and if so, switches to that room
     // and disables the rest
-    private void RoomsHack()
+    private void RoomsInputs()
     {
         int prev = currentRoom;
         if (Input.GetKeyDown(KeyCode.Alpha1)) currentRoom = 1;
@@ -109,14 +112,15 @@ public class cameraController : MonoBehaviour
         for (int i = 0; i<rooms.Count; i++)
         {
             if (i+1 != currentRoom)
-            {
+            { // Disable other rooms
                 rooms[i].SetActive(false);
             }
             else
-            {
+            { // Enable current
                 rooms[i].SetActive(true);
+                // Teleport to that room (keep y):
                 Vector3 roomPos = rooms[i].transform.position;
-                transform.position = new Vector3(roomPos.x, transform.position.y, roomPos.z); // teleport to that room (keep y)
+                transform.position = new Vector3(roomPos.x, transform.position.y, roomPos.z);
             }
         }
     }
