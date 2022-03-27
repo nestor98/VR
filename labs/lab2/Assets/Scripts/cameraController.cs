@@ -7,9 +7,9 @@ public class cameraController : MonoBehaviour
     public float rotSpeed = 20.0f;
     public float moveSpeed = 40.0f;
 
+    // OT-0:
     public string hidingTag; // Tag of the objects to hide
-
-
+    // To restore previously hidden objects:
     private HashSet<GameObject> hiddenObjs = new HashSet<GameObject>();
 
     // Start is called before the first frame update
@@ -23,6 +23,10 @@ public class cameraController : MonoBehaviour
     {
         ApplyInputs();
         RayCast(); // for OT-0
+
+        if (Input.GetKeyDown("space")) {
+            Cursor.visible = !Cursor.visible;
+        }
     }
 
     private void ApplyInputs()
