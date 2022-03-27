@@ -10,20 +10,19 @@ public class Spawner : MonoBehaviour
     public Vector3 size; // Size of the cube to spawn
                          // Start is called before the first frame update
 
+    // Maximum and current cooldown to control the spawning rate:
     public float max_cd = 1.0f;
-
     private float cooldown = 0.0f;
 
+    // Camera and xz area of the spawner, to spawn only if the camera is in the area:
     private Camera cam;
     private Rect area;
 
     void Start()
     {
-        //SpawnItem();
-
         cam = Camera.main;
+        // XZ area of the spawner:
         area = new Rect(center.x - size.x / 2, center.z - size.z / 2, size.x, size.z);
-
     }
     // Update is called once per frame
     void Update()
@@ -49,7 +48,6 @@ public class Spawner : MonoBehaviour
 
     private bool CameraInRange()
     {
-        //return true;
         return area.Contains(new Vector2(cam.transform.position.x, cam.transform.position.z));
     }
 
