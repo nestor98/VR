@@ -43,7 +43,9 @@ public class Spawner : MonoBehaviour
                                             Random.Range(-size.y / 2, size.y / 2),
                                             Random.Range(-size.z / 2, size.z / 2));
         // Instantiate the object
-        Instantiate(ItemToSpawn, pos, Quaternion.Euler(0,Random.Range(0,360),0));
+        var obj = Instantiate(ItemToSpawn, pos, Quaternion.Euler(0,Random.Range(0,360),0));
+        obj.SetActive(true);
+        obj.transform.parent = transform;
     }
 
     private bool CameraInRange()
