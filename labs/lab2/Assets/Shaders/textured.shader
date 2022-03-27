@@ -2,6 +2,7 @@ Shader "Custom/textured"
 {
     Properties
     {
+        _Color("Color multiplier", Color) = (1, 1, 1, 1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _UDisplacement ("UDisplacement", Range(0, 1)) = 0
         _VDisplacement ("VDisplacement", Range(0, 1)) = 0
@@ -26,6 +27,7 @@ Shader "Custom/textured"
         };
 
         fixed _UDisplacement, _VDisplacement;
+        fixed4 _Color;
 
         // Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
         // See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -39,7 +41,7 @@ Shader "Custom/textured"
             fixed2 disp = fixed2(_UDisplacement, _VDisplacement);
             // Albedo comes from a texture tinted by color
             fixed4 c = tex2D (_MainTex, frac(IN.uv_MainTex+disp));
-            o.Emission = c.rgb;
+            o.Emission = c.rgb * _Color;
         }
         ENDCG
     }
